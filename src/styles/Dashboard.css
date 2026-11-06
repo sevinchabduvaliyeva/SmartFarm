@@ -1,0 +1,2609 @@
+
+.farm-app {
+  --farm-green: #286b43;
+  --farm-dark: #20372a;
+  --farm-muted: #7b897e;
+  --farm-line: #e7ece6;
+  min-height: 100vh;
+  display: flex;
+  background: #f6f8f5;
+  color: var(--farm-dark);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+}
+
+.farm-app * { box-sizing: border-box; }
+.farm-app button, .farm-app input { font: inherit; }
+.farm-app button { cursor: pointer; }
+
+.farm-sidebar {
+  position: fixed;
+  z-index: 30;
+  inset: 0 auto 0 0;
+  width: 258px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 17px 16px;
+  border-right: 1px solid var(--farm-line);
+  background: #fff;
+}
+
+.farm-brand { display: flex; align-items: center; gap: 11px; padding: 0 7px 28px; font-size: 17px; font-weight: 800; letter-spacing: -.5px; }
+.farm-brand-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: #eaf4e8; color: var(--farm-green); }
+.farm-brand small { display: block; margin-top: 3px; color: #89968b; font-size: 9px; letter-spacing: 2px; }
+.farm-close-menu { display: none; margin-left: auto; border: 0; background: transparent; color: #66756a; }
+
+.farm-workspace { display: flex; align-items: center; gap: 10px; padding: 12px 10px; border: 1px solid #e8eee7; border-radius: 13px; }
+.farm-workspace-avatar { width: 37px; height: 37px; display: grid; place-items: center; border-radius: 10px; background: #eef5eb; color: #36764a; }
+.farm-workspace div { flex: 1; min-width: 0; }
+.farm-workspace strong, .farm-workspace small { display: block; }
+.farm-workspace strong { font-size: 12px; }
+.farm-workspace small { margin-top: 5px; color: #89958b; font-size: 11px; }
+.farm-workspace > svg { color: #89958b; }
+
+.farm-nav-caption { margin: 29px 10px 11px; color: #9aa49b; font-size: 10px; font-weight: 800; letter-spacing: 1.4px; }
+.farm-nav { display: grid; gap: 2px; }
+.farm-nav-item { position: relative; display: flex; align-items: center; gap: 13px; width: 100%; min-height: 45px; padding: 0 12px; border: 0; border-radius: 11px; background: transparent; color: #68786c; text-align: left; font-size: 13px; font-weight: 600; transition: background .18s, color .18s; }
+.farm-nav-item:hover { background: #f4f7f3; color: var(--farm-green); }
+.farm-nav-item.active { background: #eaf4e8; color: #286b43; font-weight: 750; }
+.farm-nav-count { display: grid; place-items: center; width: 21px; height: 21px; margin-left: auto; border-radius: 7px; background: #f2e7c8; color: #866a2c; font-size: 11px; }
+
+.farm-sidebar-bottom { margin-top: auto; }
+.farm-help-card { padding: 15px; border-radius: 14px; background: #f3f7ef; }
+.farm-help-icon { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 10px; border-radius: 10px; background: #e2eedb; color: #327446; }
+.farm-help-card strong { font-size: 12px; }
+.farm-help-card p { margin: 6px 0 0; color: #849184; font-size: 11px; line-height: 1.5; }
+.farm-settings { margin-top: 4px; }
+.farm-profile { display: flex; align-items: center; gap: 10px; width: 100%; padding: 13px 5px; border: 0; border-top: 1px solid var(--farm-line); background: #fff; text-align: left; }
+.farm-profile-avatar, .farm-top-avatar { display: grid; place-items: center; flex-shrink: 0; border-radius: 50%; background: #dcebd8; color: #286b43; font-weight: 800; }
+.farm-profile-avatar { width: 37px; height: 37px; }
+.farm-profile-text { flex: 1; min-width: 0; }
+.farm-profile-text strong, .farm-profile-text small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.farm-profile-text strong { font-size: 12px; }
+.farm-profile-text small { margin-top: 5px; color: #89958b; font-size: 10px; }
+.farm-profile > svg { color: #89958b; }
+.farm-logout { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 10px; border: 1px solid #e7ece6; border-radius: 10px; background: #fff; color: #66776b; font-size: 12px; }
+.farm-logout:hover { color: #a53e35; background: #fff8f7; }
+
+.farm-main { width: calc(100% - 258px); min-width: 0; margin-left: 258px; }
+.farm-topbar { position: sticky; z-index: 10; top: 0; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 36px; border-bottom: 1px solid var(--farm-line); background: rgba(255,255,255,.94); backdrop-filter: blur(12px); }
+.farm-breadcrumb { color: #849087; font-size: 12px; }
+.farm-breadcrumb span { padding: 0 9px; color: #c0c8c1; }
+.farm-topbar-actions { display: flex; align-items: center; gap: 15px; }
+.farm-search { display: flex; align-items: center; gap: 9px; width: 230px; height: 39px; padding: 0 11px; border: 1px solid #e5eae4; border-radius: 10px; color: #8a978d; }
+.farm-search input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #34483a; font-size: 12px; }
+.farm-search kbd { padding: 3px 5px; border: 1px solid #e5eae4; border-radius: 4px; font-size: 10px; white-space: nowrap; }
+.farm-notification-button { position: relative; display: grid; place-items: center; width: 39px; height: 39px; border: 1px solid #e5eae4; border-radius: 11px; background: #fff; color: #647468; }
+.farm-notification-button i { position: absolute; top: 8px; right: 8px; width: 7px; height: 7px; border: 1px solid #fff; border-radius: 50%; background: #dca54c; }
+.farm-top-avatar { width: 37px; height: 37px; }
+.farm-menu-button { display: none; place-items: center; border: 0; background: transparent; color: #304b38; }
+
+.farm-content { max-width: 1600px; margin: 0 auto; padding: 31px 36px 48px; }
+.farm-welcome { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+.farm-date { display: flex; align-items: center; gap: 7px; color: #829083; font-size: 11px; font-weight: 600; }
+.farm-welcome h1, .farm-section-page > h1 { margin: 10px 0 7px; color: #24392b; font-size: clamp(25px, 2.4vw, 33px); font-weight: 780; letter-spacing: -1.1px; }
+.farm-welcome h1 span { font-size: .8em; }
+.farm-welcome p, .farm-section-page > p { margin: 0; color: #849087; font-size: 13px; line-height: 1.6; }
+.farm-primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 16px; border: 0; border-radius: 10px; background: #286b43; color: #fff; font-size: 12px; font-weight: 750; white-space: nowrap; }
+.farm-primary-button:hover { background: #205735; }
+
+.farm-hero-banner { position: relative; display: flex; min-height: 235px; overflow: hidden; border-radius: 18px; background: #183d29; color: white; }
+.farm-hero-copy { position: relative; z-index: 2; width: 57%; padding: 29px 33px; }
+.farm-hero-tag { display: inline-flex; align-items: center; gap: 7px; color: #c5e7b8; font-size: 10px; font-weight: 800; letter-spacing: 1.3px; }
+.farm-hero-copy h2 { margin: 15px 0 9px; font-size: clamp(25px, 2.7vw, 35px); line-height: 1.14; letter-spacing: -1px; }
+.farm-hero-copy p { max-width: 370px; margin: 0; color: #d7e6d9; font-size: 12px; line-height: 1.7; }
+.farm-hero-copy button { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 10px 13px; border: 1px solid rgba(255,255,255,.27); border-radius: 9px; background: rgba(255,255,255,.08); color: #fff; font-size: 11px; font-weight: 700; }
+.farm-hero-image { position: absolute; inset: 0 0 0 42%; background: linear-gradient(90deg,#183d29 0%,rgba(24,61,41,.52) 25%,rgba(24,61,41,.03) 100%),url('/images/hero.png') center / cover; }
+
+.farm-stats-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; margin-top: 22px; }
+.farm-stat-card, .farm-panel { min-width: 0; border: 1px solid #e8ede6; border-radius: 15px; background: #fff; box-shadow: 0 3px 12px rgba(32,55,42,.025); }
+.farm-stat-card { padding: 18px; }
+.farm-stat-top { display: flex; align-items: center; gap: 9px; }
+.farm-stat-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; }
+.farm-stat-icon.green { background: #eaf4e8; color: #3b814c; }
+.farm-stat-icon.blue { background: #eaf0fa; color: #557bb9; }
+.farm-stat-icon.aqua { background: #e5f5f3; color: #37948c; }
+.farm-stat-icon.gold { background: #fbf1dd; color: #b0873a; }
+.farm-stat-label { color: #748177; font-size: 11px; font-weight: 650; }
+.farm-stat-value { margin-top: 18px; font-size: 31px; font-weight: 800; letter-spacing: -1px; }
+.farm-stat-value small { color: #89958b; font-size: 12px; font-weight: 600; letter-spacing: 0; }
+.farm-stat-foot { display: flex; justify-content: space-between; align-items: center; gap: 5px; margin-top: 12px; color: #929d93; font-size: 10px; }
+.farm-stat-foot span:first-child { display: inline-flex; align-items: center; gap: 4px; }
+.farm-stat-foot svg { color: #4a9460; }
+.farm-progress { height: 5px; margin-top: 13px; overflow: hidden; border-radius: 6px; background: #e8f1e7; }
+.farm-progress span { display: block; height: 100%; border-radius: inherit; background: #4e9b65; }
+
+.farm-dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.farm-bottom-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+  gap: 18px;
+  margin-top: 20px;
+}
+.farm-panel { padding: 22px; }
+.farm-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.farm-panel-eyebrow { color: #8c9b8e; font-size: 9px; font-weight: 800; letter-spacing: 1.5px; }
+.farm-panel-heading h3 { margin: 6px 0 0; font-size: 17px; font-weight: 780; letter-spacing: -.4px; }
+.farm-ai-status { display: inline-flex; align-items: center; gap: 6px; padding: 7px 9px; border-radius: 7px; background: #f1f6ec; color: #638151; font-size: 10px; white-space: nowrap; }
+.farm-ai-status span { width: 6px; height: 6px; border-radius: 50%; background: #6b9c50; }
+.farm-ai-main { display: flex; align-items: flex-start; gap: 13px; padding: 14px; border: 1px solid #e5eee0; border-radius: 12px; background: #f8faf5; }
+.farm-ai-icon { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; background: #e4f0de; color: #3d7b4b; }
+.farm-ai-main strong { display: block; font-size: 12px; line-height: 1.5; }
+.farm-ai-main p { margin: 5px 0 0; color: #859186; font-size: 11px; line-height: 1.65; }
+.farm-risk-list { display: grid; gap: 15px; margin-top: 20px; }
+.farm-risk-list > div { display: grid; grid-template-columns: 1fr 42px; gap: 8px; align-items: center; }
+.farm-risk-list span { display: flex; align-items: center; gap: 7px; color: #68786c; font-size: 11px; }
+.farm-risk-list strong { text-align: right; font-size: 11px; }
+.farm-risk-list i { grid-column: 1 / -1; height: 5px; overflow: hidden; border-radius: 5px; background: #edf1eb; }
+.farm-risk-list i b { display: block; height: 100%; border-radius: inherit; background: #c6a45e; }
+.farm-demo-note { margin: 16px 0 0; color: #a0aaa0; font-size: 10px; line-height: 1.5; }
+
+.farm-weather-icon { display: grid; place-items: center; width: 41px; height: 41px; border-radius: 12px; background: #fbf1df; color: #b88a39; }
+.farm-weather-placeholder { display: flex; min-height: 172px; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #91a18f; }
+.farm-weather-placeholder > svg { margin-bottom: 13px; color: #b7c39f; }
+.farm-weather-placeholder strong { color: #536658; font-size: 12px; }
+.farm-weather-placeholder p { max-width: 240px; margin: 7px 0 0; color: #929d93; font-size: 11px; line-height: 1.6; }
+.farm-outline-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 13px; border: 1px solid #e1e9df; border-radius: 9px; background: #fff; color: #4c6c53; font-size: 11px; font-weight: 700; }
+.farm-outline-button:hover { background: #f4f8f2; }
+
+.farm-text-button { display: inline-flex; align-items: center; gap: 5px; padding: 6px 0; border: 0; background: transparent; color: #39794b; font-size: 11px; font-weight: 750; white-space: nowrap; }
+.farm-table-wrap { width: 100%; overflow-x: auto; }
+.farm-table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+.farm-table th { padding: 12px 10px; border-bottom: 1px solid #e9eee8; color: #94a095; font-size: 10px; font-weight: 650; }
+.farm-table td { padding: 14px 10px; border-bottom: 1px solid #f0f3ef; color: #637166; font-size: 11px; }
+.farm-table tr:last-child td { border-bottom: 0; }
+.farm-table td:first-child { display: table-cell; }
+.farm-crop-symbol { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-right: 9px; vertical-align: middle; border-radius: 10px; }
+.farm-crop-symbol.green { background: #edf5e8; color: #5b8d43; }
+.farm-crop-symbol.gold { background: #fbf2df; color: #b68c3c; }
+.farm-crop-name { display: inline-block; vertical-align: middle; color: #34483a; font-weight: 750; }
+.farm-crop-name small, .farm-table-sub { display: block; margin-top: 5px; color: #9aa49b; font-size: 10px; font-weight: 400; }
+.farm-status-pill { display: inline-block; padding: 6px 8px; border-radius: 7px; background: #eef6e9; color: #598248; font-size: 10px; }
+.farm-muted-icon { color: #9aa79b; }
+.farm-task-list { display: grid; }
+.farm-task { display: flex; align-items: center; gap: 11px; padding: 13px 0; border-bottom: 1px solid #eff2ee; cursor: pointer; }
+.farm-task input { width: 16px; height: 16px; accent-color: #397c4c; }
+.farm-task-title { flex: 1; color: #48594b; font-size: 11px; font-weight: 650; line-height: 1.5; }
+.farm-task-title small { display: block; margin-top: 4px; color: #9aa49b; font-size: 10px; font-weight: 400; }
+.farm-task.done .farm-task-title { color: #9ba59b; text-decoration: line-through; }
+.farm-task > svg { color: #569265; }
+.farm-task-link { margin-top: 12px; }
+
+.farm-section-page > h1 { margin-top: 13px; }
+.farm-section-page > p { margin-bottom: 25px; }
+.farm-section-panel { margin-top: 24px; }
+.farm-empty-panel { display: flex; min-height: 290px; flex-direction: column; align-items: center; justify-content: center; margin-top: 24px; text-align: center; }
+.farm-empty-icon { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 17px; background: #eaf4e8; color: #347649; }
+.farm-empty-panel h3 { margin: 17px 0 5px; font-size: 18px; }
+.farm-empty-panel p { max-width: 380px; color: #849087; font-size: 12px; line-height: 1.7; }
+.farm-crop-form { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: 13px; margin-bottom: 22px; padding: 17px; border-radius: 12px; background: #f7faf5; }
+.farm-crop-form label { display: grid; gap: 8px; color: #5c6e60; font-size: 11px; font-weight: 700; }
+.farm-crop-form input { width: 100%; height: 41px; padding: 0 11px; border: 1px solid #dfe8dc; border-radius: 9px; outline-color: #6ba77a; background: white; font-size: 12px; }
+.farm-notice { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; padding: 12px 14px; border: 1px solid #d9ead6; border-radius: 10px; background: #f1f8ed; color: #3d7748; font-size: 12px; }
+.farm-notice button { display: grid; place-items: center; margin-left: auto; border: 0; background: transparent; color: inherit; }
+
+.farm-mobile-overlay { display: none; }
+
+@media (min-width: 1500px) {
+  .farm-content { padding-right: 48px; padding-left: 48px; }
+  .farm-stat-card { padding: 22px; }
+}
+
+@media (max-width: 1250px) {
+  .farm-content { padding-right: 24px; padding-left: 24px; }
+  .farm-topbar { padding-right: 24px; padding-left: 24px; }
+  .farm-stats-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .farm-dashboard-grid, .farm-bottom-grid { grid-template-columns: minmax(0,1fr); }
+  .farm-hero-copy { width: 68%; }
+}
+
+@media (max-width: 800px) {
+  .farm-sidebar { transform: translateX(-105%); transition: transform .25s ease; box-shadow: 10px 0 35px rgba(0,0,0,.06); }
+  .farm-sidebar.farm-sidebar-open { transform: translateX(0); }
+  .farm-close-menu { display: grid; place-items: center; }
+  .farm-mobile-overlay { position: fixed; z-index: 25; inset: 0; display: block; border: 0; background: rgba(16,35,22,.35); }
+  .farm-main { width: 100%; margin-left: 0; }
+  .farm-topbar { height: 65px; gap: 12px; padding: 0 18px; }
+  .farm-menu-button { display: grid; }
+  .farm-search { width: 180px; }
+  .farm-content { padding: 25px 18px 38px; }
+  .farm-hero-banner { min-height: 230px; }
+  .farm-hero-copy { width: 75%; padding: 25px; }
+  .farm-hero-image { left: 30%; }
+}
+
+@media (max-width: 520px) {
+  .farm-breadcrumb { font-size: 11px; }
+  .farm-topbar-actions { gap: 8px; }
+  .farm-search { width: 38px; padding: 0 10px; border: 0; }
+  .farm-search input, .farm-search kbd { display: none; }
+  .farm-notification-button { width: 36px; height: 36px; }
+  .farm-top-avatar { width: 33px; height: 33px; }
+  .farm-content { padding: 22px 13px 30px; }
+  .farm-welcome { align-items: flex-start; flex-direction: column; }
+  .farm-welcome h1 { font-size: 26px; }
+  .farm-hero-banner { min-height: 245px; }
+  .farm-hero-copy { width: 100%; padding: 23px 20px; }
+  .farm-hero-copy h2 { font-size: 28px; }
+  .farm-hero-copy p { max-width: 260px; }
+  .farm-hero-image { inset: 0; opacity: .28; background: linear-gradient(90deg,#183d29 0%,rgba(24,61,41,.65) 100%),url('/images/hero.png') center / cover; }
+  .farm-stats-grid { gap: 10px; }
+  .farm-stat-card { padding: 13px; }
+  .farm-stat-top { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .farm-stat-label { font-size: 10px; }
+  .farm-stat-value { margin-top: 13px; font-size: 28px; }
+  .farm-stat-foot { align-items: flex-start; flex-direction: column; }
+  .farm-panel { padding: 16px 13px; }
+  .farm-panel-heading h3 { font-size: 16px; }
+  .farm-crop-form { grid-template-columns: 1fr; }
+  .farm-ai-status { font-size: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .farm-app *, .farm-app *::before, .farm-app *::after { transition: none !important; }
+}
+
+/* Ekinlar jadvalini o‘qishga qulaylashtirish */
+.farm-table {
+  width: 100%;
+  font-size: 16px;
+}
+
+.farm-table th {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 16px 18px;
+}
+
+.farm-table td {
+  font-size: 16px;
+  padding: 18px;
+  line-height: 1.6;
+}
+
+.farm-crop-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.farm-crop-name small,
+.farm-table-sub {
+  font-size: 14px;
+}
+
+.farm-status-pill {
+  font-size: 14px;
+  padding: 7px 11px;
+}
+
+/* Ekin qo‘shish formasidagi matnlar */
+.farm-crop-form-field,
+.farm-crop-form label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.farm-crop-form input,
+.farm-crop-form select {
+  font-size: 16px;
+  min-height: 46px;
+  padding: 10px 12px;
+}
+
+/* Ekin formasi: bir xil, o‘qishga qulay maydonlar */
+.farm-crop-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: end;
+}
+
+.farm-crop-form label,
+.farm-crop-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  color: #334155;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.farm-crop-form input,
+.farm-crop-form select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid #d5e2d8;
+  border-radius: 12px;
+  background: #fff;
+  color: #24372b;
+  font: inherit;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.farm-crop-form input:focus,
+.farm-crop-form select:focus {
+  border-color: #299653;
+  box-shadow: 0 0 0 3px rgb(41 150 83 / 12%);
+}
+
+.farm-crop-form select {
+  cursor: pointer;
+}
+
+.farm-crop-form button {
+  min-height: 48px;
+  justify-self: start;
+}
+
+.farm-table th,
+.farm-table td {
+  font-size: 15px;
+  padding: 16px 18px;
+  line-height: 1.6;
+}
+
+.farm-status-pill {
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: normal;
+}
+
+@media (max-width: 640px) {
+  .farm-crop-form {
+    grid-template-columns: 1fr;
+  }
+}
+.farm-hero-banner {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 83, 43, 0.96) 0%,
+      rgba(5, 83, 43, 0.82) 42%,
+      rgba(5, 83, 43, 0.12) 100%
+    ),
+    url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1800&q=85")
+    center 55% / cover no-repeat;
+  border-radius: 24px;
+  color: white;
+  min-height: 300px;
+}
+
+.farm-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 540px;
+  padding: 36px;
+}
+
+.farm-hero-copy h2 {
+  color: white;
+}
+
+.farm-hero-copy p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.farm-hero-image {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .farm-hero-copy {
+    padding: 24px;
+  }
+
+  .farm-hero-banner {
+    min-height: 280px;
+    background-position: center;
+  }
+}
+.farm-crop-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+
+.farm-crop-actions button:not(.farm-icon-button) {
+  padding: 8px 11px;
+  border-radius: 9px;
+  border: 1px solid #dce8df;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+
+.farm-edit-btn {
+  color: #168044;
+}
+
+.farm-edit-btn:hover {
+  background: #edf9f0;
+}
+
+.farm-delete-btn {
+  color: #dc2626;
+}
+
+.farm-delete-btn:hover {
+  background: #fff1f2;
+}
+
+.farm-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.farm-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.farm-icon-button:hover {
+  transform: translateY(-1px);
+}
+
+.farm-edit-button {
+  color: #3678d4;
+  background: #eff6ff;
+}
+
+.farm-edit-button:hover {
+  background: #dbeafe;
+}
+
+.farm-delete-button {
+  color: #dc5252;
+  background: #fff1f1;
+}
+
+.farm-delete-button:hover {
+  background: #fee2e2;
+}
+
+/* Sug‘orish bo‘limidagi ikonka tugmalari */
+.farm-action-buttons .farm-icon-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  padding: 0 !important;
+  border: 1px solid transparent !important;
+  border-radius: 10px !important;
+  cursor: pointer;
+}
+
+.farm-action-buttons .farm-edit-button {
+  color: #3678d4 !important;
+  background: #eff6ff !important;
+}
+
+.farm-action-buttons .farm-delete-button {
+  color: #dc5252 !important;
+  background: #fff1f1 !important;
+}
+
+.farm-action-buttons .farm-icon-button:hover {
+  transform: translateY(-1px);
+}
+.farm-complete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 14px;
+  margin-top: 7px;
+  border: 1px solid #bbf7d0;
+  border-radius: 9px;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.farm-complete-button:hover {
+  background: #dcfce7;
+  border-color: #86efac;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(22, 163, 74, 0.12);
+}
+
+.farm-complete-button:active {
+  transform: scale(0.97);
+}
+
+.farm-irrigation-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+/* Oylik kalendar */
+.farm-calendar {
+  padding: 24px;
+}
+
+.farm-calendar-navigation {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.farm-calendar-navigation strong {
+  font-size: 15px;
+  text-transform: capitalize;
+  min-width: 125px;
+  text-align: center;
+}
+
+.farm-calendar-navigation button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+}
+
+.farm-calendar-navigation button:hover {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+.farm-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.farm-calendar-weekday {
+  text-align: center;
+  padding: 10px 2px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.farm-calendar-day,
+.farm-calendar-empty {
+  min-height: 90px;
+  border-radius: 10px;
+}
+
+.farm-calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #334155;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.farm-calendar-day:hover {
+  border-color: #86c99b;
+  background: #f8fcf8;
+}
+
+.farm-calendar-day.selected {
+  border: 2px solid #279653;
+  background: #f0fdf4;
+}
+
+.farm-calendar-day > span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.calendar-irrigation-dot,
+.calendar-fertilizer-dot {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.calendar-irrigation-dot {
+  color: #2563eb;
+}
+
+.calendar-fertilizer-dot {
+  color: #15803d;
+}
+
+.farm-calendar-selected {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.farm-calendar-selected h4 {
+  margin: 0 0 15px;
+  font-size: 16px;
+  color: #1e293b;
+}
+
+.farm-calendar-selected > p {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.farm-calendar-event {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 15px;
+  margin-bottom: 9px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 13px;
+}
+
+.farm-calendar-event strong {
+  color: #334155;
+}
+
+.farm-calendar-event span {
+  color: #64748b;
+}
+
+@media (max-width: 600px) {
+  .farm-calendar {
+    padding: 14px;
+  }
+
+  .farm-calendar-grid {
+    gap: 4px;
+  }
+
+  .farm-calendar-day,
+  .farm-calendar-empty {
+    min-height: 70px;
+  }
+
+  .farm-calendar-day {
+    padding: 6px;
+  }
+
+  .calendar-irrigation-dot,
+  .calendar-fertilizer-dot {
+    font-size: 9px;
+  }
+
+  .farm-calendar-event {
+    flex-wrap: wrap;
+  }
+}
+.calendar-irrigation-dot,
+.calendar-fertilizer-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.farm-calendar-day.today {
+  border: 1.5px solid #279653;
+  background: #f0fdf4;
+}
+
+.farm-calendar-day.today > span {
+  color: #15803d;
+  font-weight: 800;
+}
+
+.farm-calendar-day.today.selected {
+  border: 2px solid #15803d;
+  background: #dcfce7;
+}
+/* Bildirishnomalar bo‘limi */
+.farm-notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.farm-notifications-header h2 {
+  margin: 0 0 7px;
+  font-size: 23px;
+  font-weight: 700;
+  color: #1d2939;
+}
+
+.farm-notifications-header p {
+  margin: 0;
+  color: #89939f;
+  font-size: 14px;
+}
+
+.farm-notification-count {
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #e9f7ef;
+  color: #16834b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.farm-notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.farm-notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 18px;
+  border: 1px solid #e9edf0;
+  border-radius: 14px;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.farm-notification-item:hover {
+  border-color: #c8dfd1;
+  transform: translateY(-2px);
+}
+
+.farm-notification-item.is-unread {
+  background: #f7fcf8;
+  border-color: #cfe9d7;
+}
+
+.farm-notification-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #e8f5ec;
+  color: #238653;
+}
+
+.farm-notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.farm-notification-content strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #253342;
+  font-size: 15px;
+}
+
+.farm-notification-content p {
+  margin: 0 0 9px;
+  color: #687583;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.farm-notification-content span {
+  color: #98a2ad;
+  font-size: 12px;
+}
+
+.farm-empty-state {
+  padding: 55px 20px;
+  text-align: center;
+  border: 1px dashed #dce5df;
+  border-radius: 16px;
+  background: #fafcfb;
+  color: #89939f;
+}
+
+.farm-empty-state svg {
+  color: #55a477;
+  margin-bottom: 12px;
+}
+
+.farm-empty-state h3 {
+  margin: 0 0 8px;
+  color: #344054;
+  font-size: 17px;
+}
+
+.farm-empty-state p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .farm-notifications-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .farm-notification-item {
+    padding: 14px;
+  }
+}
+.farm-notification-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.farm-notification-stat {
+  padding: 20px;
+  border: 1px solid #e8eee9;
+  border-radius: 14px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.farm-notification-stat span {
+  color: #7b8794;
+  font-size: 13px;
+}
+
+.farm-notification-stat strong {
+  color: #238653;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+@media (max-width: 650px) {
+  .farm-notification-stats {
+    grid-template-columns: 1fr;
+  }
+}
+/* PROFILE SECTION */
+
+.farm-profile-panel {
+  padding: 30px;
+}
+
+.farm-profile-heading {
+  margin-bottom: 28px;
+}
+
+.farm-profile-heading h2 {
+  margin: 0 0 8px;
+  color: #1d2939;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.farm-profile-heading p {
+  margin: 0;
+  color: #89939f;
+  font-size: 14px;
+}
+
+.farm-profile-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 850px;
+}
+
+.farm-profile-avatar {
+  grid-column: 1 / -1;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e9f5ed;
+  color: #238653;
+  overflow: hidden;
+}
+
+.farm-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.farm-profile-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: #344054;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.farm-profile-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #e1e7e3;
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+  color: #344054;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.farm-profile-form input:focus {
+  border-color: #238653;
+  box-shadow: 0 0 0 3px rgba(35, 134, 83, 0.09);
+}
+
+.farm-profile-form input:disabled {
+  background: #f5f7f6;
+  color: #89939f;
+  cursor: not-allowed;
+}
+
+.farm-profile-notice {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #238653;
+  font-size: 14px;
+}
+
+.farm-profile-form > button {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.farm-profile-logout {
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid #edf0ee;
+}
+
+@media (max-width: 650px) {
+  .farm-profile-panel {
+    padding: 20px;
+  }
+
+  .farm-profile-form {
+    grid-template-columns: 1fr;
+  }
+}
+.farm-profile-avatar-wrapper {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.farm-profile-avatar-wrapper > span {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: #e9f5ed;
+  color: #238653;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.farm-profile-avatar-wrapper:hover > span {
+  background: #d9eee0;
+}
+
+.farm-profile-avatar {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.farm-profile-avatar:hover {
+  transform: scale(1.04);
+}
+/* PASSWORD SECTION */
+
+.farm-password-section {
+  margin-top: 30px;
+  padding: 24px;
+  border: 1px solid #edf0ee;
+  border-radius: 14px;
+  background: #fbfdfb;
+}
+
+.farm-password-section h3 {
+  margin: 0 0 8px;
+  color: #1d2939;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.farm-password-section > p {
+  margin: 0 0 18px;
+  color: #89939f;
+  font-size: 14px;
+}
+
+.farm-password-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  max-width: 850px;
+  margin-top: 20px;
+}
+
+.farm-password-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: #344054;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.farm-password-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #e1e7e3;
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+  color: #344054;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.farm-password-form input:focus {
+  border-color: #238653;
+  box-shadow: 0 0 0 3px rgba(35, 134, 83, 0.09);
+}
+
+.farm-password-form .farm-profile-notice,
+.farm-password-form .farm-profile-actions {
+  grid-column: 1 / -1;
+}
+
+.farm-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 650px) {
+  .farm-password-section {
+    padding: 18px;
+  }
+
+  .farm-password-form {
+    grid-template-columns: 1fr;
+  }
+}
+.farm-profile-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #238653;
+}
+
+.farm-profile-title h2 {
+  margin: 0;
+}
+/* PROFIL BO'LIMI — YANGI DIZAYN */
+
+.farm-profile-panel {
+  width: 100%;
+  max-width: none;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.farm-profile-heading {
+  margin-bottom: 32px;
+}
+
+.farm-profile-heading h2 {
+  font-size: 28px;
+}
+
+.farm-profile-heading p {
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+/* Profil ma'lumotlari */
+
+.farm-profile-view {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  align-items: start;
+  gap: 28px;
+  width: 100%;
+}
+
+.farm-profile-view .farm-profile-avatar-wrapper {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.farm-profile-info {
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.farm-profile-info p {
+  margin: 0;
+  padding: 18px;
+  min-height: 65px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  background: #f7faf8;
+  border: 1px solid #e8efea;
+  border-radius: 12px;
+  color: #344054;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.farm-profile-info strong {
+  color: #718078;
+  font-size: 13px;
+}
+
+.farm-profile-view > .farm-primary-button {
+  grid-column: 2;
+  justify-self: start;
+}
+
+/* Profil rasmi */
+
+.farm-profile-avatar {
+  width: 110px;
+  height: 110px;
+}
+
+.farm-profile-avatar-wrapper > span {
+  font-size: 14px;
+}
+
+/* Tahrirlash formasi */
+
+.farm-profile-form {
+  width: 100%;
+  max-width: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.farm-profile-form label,
+.farm-password-form label {
+  font-size: 15px;
+  gap: 10px;
+}
+
+.farm-profile-form input,
+.farm-password-form input {
+  min-height: 52px;
+  font-size: 15px;
+  padding: 0 16px;
+}
+
+/* Parol bo'limi */
+
+.farm-password-section {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 36px;
+  padding: 28px;
+}
+
+.farm-password-section h3 {
+  font-size: 20px;
+}
+
+.farm-password-section > p {
+  font-size: 15px;
+}
+
+.farm-password-form {
+  width: 100%;
+  max-width: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Tugmalar */
+
+.farm-profile-panel .farm-primary-button,
+.farm-profile-panel .farm-outline-button {
+  min-height: 46px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+/* Kichik ekranlar */
+
+@media (max-width: 800px) {
+  .farm-profile-view {
+    grid-template-columns: 1fr;
+  }
+
+  .farm-profile-view .farm-profile-avatar-wrapper {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .farm-profile-info {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .farm-profile-view > .farm-primary-button {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .farm-profile-panel {
+    padding: 20px;
+  }
+
+  .farm-profile-info,
+  .farm-profile-form,
+  .farm-password-form {
+    grid-template-columns: 1fr;
+  }
+
+  .farm-password-section {
+    padding: 20px;
+  }
+}
+/* PROFIL YOZUVLARINI KATTALASHTIRISH */
+
+.farm-profile-heading h2 {
+  font-size: 32px;
+}
+
+.farm-profile-heading p {
+  font-size: 17px;
+}
+
+.farm-profile-info p {
+  font-size: 17px;
+  padding: 22px;
+  min-height: 75px;
+}
+
+.farm-profile-info strong {
+  font-size: 15px;
+}
+
+.farm-profile-form label,
+.farm-password-form label {
+  font-size: 17px;
+}
+
+.farm-profile-form input,
+.farm-password-form input {
+  font-size: 17px;
+  min-height: 56px;
+}
+
+.farm-profile-avatar-wrapper > span {
+  font-size: 15px;
+}
+
+/* PAROL XAVFSIZLIGI KARTOCHKASI */
+
+.farm-password-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 40px;
+  padding: 30px;
+  border: 1px solid #e2ece5;
+  border-radius: 16px;
+  background: #f8fbf9;
+}
+
+.farm-password-section h3 {
+  margin: 0;
+  font-size: 23px;
+}
+
+.farm-password-section > p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.farm-password-section > .farm-outline-button {
+  margin-top: 5px;
+}
+
+.farm-password-form {
+  width: 100%;
+  margin-top: 12px;
+  gap: 22px;
+}
+
+.farm-password-form .farm-profile-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 5px;
+}
+
+.farm-profile-actions button {
+  min-height: 48px;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .farm-profile-heading h2 {
+    font-size: 26px;
+  }
+
+  .farm-profile-info p {
+    font-size: 15px;
+  }
+
+  .farm-password-section {
+    padding: 20px;
+  }
+}
+.farm-sidebar-bottom {
+  margin-top: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 3px !important;
+}
+/* Bildirishnoma sozlamalari */
+.farm-notification-settings {
+  margin-top: 24px;
+  padding: 26px;
+  border: 1px solid #e5eee8;
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.farm-notification-settings h3 {
+  margin: 0 0 8px;
+  color: #1f2937;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.farm-notification-settings > p {
+  margin: 0 0 22px;
+  color: #718096;
+  font-size: 15px;
+}
+
+.farm-notification-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid #edf2ee;
+}
+
+.farm-notification-option label {
+  color: #263b30;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.farm-notification-option input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #238653;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .farm-notification-settings {
+    padding: 18px;
+  }
+
+  .farm-notification-option label {
+    font-size: 14px;
+  }
+}
+/* Til sozlamalari */
+.farm-language-settings {
+  margin-top: 20px;
+}
+
+.farm-language-settings select {
+  width: 100%;
+  max-width: 320px;
+  padding: 13px 15px;
+  border: 1px solid #dce8df;
+  border-radius: 10px;
+  background: #f9fcfa;
+  color: #263b30;
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+}
+
+.farm-language-settings select:focus {
+  border-color: #238653;
+  box-shadow: 0 0 0 3px rgba(35, 134, 83, 0.12);
+}
+/* SmartFarm Planner — Dark Theme */
+.farm-app.farm-dark-theme {
+  background: #111827;
+  color: #e5e7eb;
+  min-height: 100vh;
+}
+
+.farm-dark-theme .farm-section-page,
+.farm-dark-theme .farm-panel,
+.farm-dark-theme .farm-profile-panel,
+.farm-dark-theme .farm-settings-panel {
+  background: #1f2937;
+  color: #e5e7eb;
+}
+
+.farm-dark-theme h1,
+.farm-dark-theme h2,
+.farm-dark-theme h3,
+.farm-dark-theme p,
+.farm-dark-theme label {
+  color: #e5e7eb;
+}
+
+.farm-dark-theme input,
+.farm-dark-theme select,
+.farm-dark-theme textarea {
+  background: #374151;
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+.farm-dark-theme .farm-notification-settings,
+.farm-dark-theme .farm-notification-option {
+  background: #273449;
+  border-color: #465469;
+}
+
+.farm-dark-theme .farm-notification-option label {
+  color: #f9fafb;
+}
+/* Dark theme — Sidebar */
+.farm-dark-theme .farm-sidebar {
+  background: #172235;
+  border-right: 1px solid #2d3b50;
+}
+
+.farm-dark-theme .farm-brand {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-nav-item {
+  color: #b8c5d6;
+}
+
+.farm-dark-theme .farm-nav-item:hover,
+.farm-dark-theme .farm-nav-item.active {
+  background: #263a50;
+  color: #ffffff;
+}
+
+.farm-dark-theme .farm-logout {
+  color: #e5a0a0;
+}
+/* Dark theme — Topbar */
+.farm-dark-theme .farm-topbar {
+  background: rgba(23, 34, 53, 0.96);
+  border-bottom: 1px solid #2d3b50;
+  backdrop-filter: blur(12px);
+}
+
+.farm-dark-theme .farm-breadcrumb {
+  color: #aab7c8;
+}
+
+.farm-dark-theme .farm-breadcrumb span {
+  color: #64748b;
+}
+
+.farm-dark-theme .farm-topbar-actions {
+  color: #e5e7eb;
+}
+
+.farm-dark-theme .farm-notification-button,
+.farm-dark-theme .farm-topbar button {
+  color: #dbe5ef;
+}
+/* Dark theme — Cards and panels */
+.farm-dark-theme .farm-panel {
+  background: #1f2d40;
+  border: 1px solid #2d3b50;
+  color: #f1f5f9;
+  border-radius: 16px;
+}
+
+.farm-dark-theme .farm-panel-heading h3 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-panel-eyebrow {
+  color: #9aabc0;
+}
+
+.farm-dark-theme .farm-panel p {
+  color: #b8c5d6;
+}
+/* Dark theme — Tables */
+.farm-dark-theme .farm-table {
+  background: #1f2d40;
+}
+
+.farm-dark-theme .farm-table th {
+  background: #26364b;
+  color: #c1cede;
+  border-bottom: 1px solid #3a4a60;
+}
+
+.farm-dark-theme .farm-table td {
+  color: #d5deea;
+  border-bottom: 1px solid #34445a;
+}
+
+.farm-dark-theme .farm-table tr:hover td {
+  background: #293b52;
+}
+
+.farm-dark-theme .farm-table tr:last-child td {
+  border-bottom: 0;
+}
+/* Dark theme — Settings cards */
+.farm-dark-theme .farm-password-section,
+.farm-dark-theme .farm-notification-settings,
+.farm-dark-theme .farm-language-settings,
+.farm-dark-theme .farm-theme-settings {
+  background: #1f2d40;
+  border: 1px solid #34445a;
+  border-radius: 16px;
+  padding: 22px;
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-notification-option {
+  border-color: #34445a;
+}
+
+.farm-dark-theme .farm-notification-option label,
+.farm-dark-theme .farm-password-section label {
+  color: #e2e8f0;
+}
+
+.farm-dark-theme .farm-language-settings select {
+  background: #26364b;
+  color: #f1f5f9;
+  border-color: #46566c;
+}
+/* Dark theme — Text and buttons */
+.farm-dark-theme {
+  color: #e2e8f0;
+}
+
+.farm-dark-theme h1,
+.farm-dark-theme h2,
+.farm-dark-theme h3,
+.farm-dark-theme h4 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme p,
+.farm-dark-theme .farm-breadcrumb {
+  color: #aab7c8;
+}
+
+.farm-dark-theme input::placeholder,
+.farm-dark-theme textarea::placeholder {
+  color: #94a3b8;
+}
+
+.farm-dark-theme .farm-primary-button {
+  background: #238653;
+  color: #ffffff;
+}
+
+.farm-dark-theme .farm-outline-button {
+  background: transparent;
+  color: #75d6a0;
+  border-color: #438b67;
+}
+
+.farm-dark-theme .farm-outline-button:hover {
+  background: #263f36;
+}
+
+.farm-dark-theme button:disabled {
+  opacity: 0.55;
+}
+/* Dark theme — Statistics cards */
+.farm-dark-theme .farm-stat-card {
+  background: #1f2d40;
+  border: 1px solid #34445a;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.farm-dark-theme .farm-stat-label {
+  color: #aab7c8;
+}
+
+.farm-dark-theme .farm-stat-value {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-stat-value small {
+  color: #b8c5d6;
+}
+
+.farm-dark-theme .farm-stat-foot {
+  color: #9aabc0;
+}
+
+.farm-dark-theme .farm-stat-foot svg {
+  color: #55bd83;
+}
+
+/* Statistik ikonkalarning qorong‘i rejimi */
+.farm-dark-theme .farm-stat-icon.green {
+  background: #244a3b;
+  color: #75d6a0;
+}
+
+.farm-dark-theme .farm-stat-icon.blue {
+  background: #293f60;
+  color: #8db8f2;
+}
+
+.farm-dark-theme .farm-stat-icon.aqua {
+  background: #204b4b;
+  color: #73d5cc;
+}
+
+.farm-dark-theme .farm-stat-icon.gold {
+  background: #51432b;
+  color: #e9c477;
+}
+/* Dark theme — AI recommendations */
+.farm-dark-theme .farm-ai-status {
+  background: #294333;
+  color: #a7e0b8;
+}
+
+.farm-dark-theme .farm-ai-status span {
+  background: #65c98b;
+}
+
+.farm-dark-theme .farm-ai-main {
+  background: #243449;
+  border: 1px solid #3a4d62;
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-ai-main strong {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-ai-main p {
+  color: #b1bfd0;
+}
+
+.farm-dark-theme .farm-ai-icon {
+  background: #294a3b;
+  color: #79d6a1;
+}
+.farm-dark-theme .farm-table td {
+  color: #d5deea;
+}
+
+.farm-dark-theme .farm-table td span {
+  color: #a7e0b8;
+}
+/* Ekin rivojlanish holati */
+.farm-dark-theme .farm-status-pill.status-planned {
+  background: #294333;
+  color: #a7e0b8;
+  border: 1px solid #3d684d;
+}
+
+.farm-app:not(.farm-dark-theme) .farm-status-pill.status-planned {
+  background: #e8f4e9;
+  color: #39734a;
+  border: 1px solid #cce5d0;
+}
+/* Tizimdan chiqish tugmasi */
+.farm-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #f0dada;
+  border-radius: 10px;
+  background: #fff5f5;
+  color: #c45151;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.farm-logout:hover {
+  background: #ffe8e8;
+}
+
+.farm-dark-theme .farm-logout {
+  background: #3b2930;
+  border-color: #60404a;
+  color: #f0a1ad;
+}
+
+.farm-dark-theme .farm-logout:hover {
+  background: #50313b;
+}
+.farm-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+  align-items: stretch;
+}
+
+.farm-settings-grid > div {
+  min-width: 0;
+  height: 100%;
+}
+
+@media (max-width: 700px) {
+  .farm-settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Sozlamalar kartochkalari */
+.farm-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.farm-settings-grid > div {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 210px;
+  height: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.farm-settings-grid h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.farm-settings-grid p {
+  margin: 0 0 8px;
+  line-height: 1.6;
+  min-height: 42px;
+}
+
+.farm-settings-grid button,
+.farm-settings-grid select {
+  margin-top: auto;
+}
+
+.farm-settings-grid .farm-notification-option {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+}
+
+.farm-settings-grid .farm-theme-settings label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.farm-settings-grid .farm-language-settings select {
+  width: 100%;
+  min-height: 42px;
+}
+
+@media (max-width: 700px) {
+  .farm-settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* SOZLAMALAR — YAGONA KARTOCHKA DIZAYNI */
+
+.farm-settings-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(250px, auto);
+  gap: 22px;
+  align-items: stretch;
+  margin-top: 25px;
+}
+
+.farm-settings-grid > .farm-password-section,
+.farm-settings-grid > .farm-notification-settings {
+  width: 100%;
+  min-width: 0;
+  min-height: 250px;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0 !important;
+  padding: 25px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  border-radius: 16px;
+}
+
+.farm-settings-grid h3 {
+  margin: 0 !important;
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.farm-settings-grid > div > p {
+  margin: 0 !important;
+  min-height: 45px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.farm-settings-grid .farm-notification-option {
+  padding: 12px 0;
+  margin: 0;
+}
+
+.farm-settings-grid .farm-language-settings select {
+  width: 100%;
+  max-width: none;
+  margin-top: auto;
+}
+
+.farm-settings-grid .farm-theme-settings label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.farm-settings-grid .farm-outline-button {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.farm-settings-grid .farm-password-form {
+  margin-top: 5px;
+}
+
+@media (max-width: 700px) {
+  .farm-settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Sozlamalar kartochkalari ichki joylashuvi */
+.farm-settings-grid > div {
+  justify-content: center;
+  gap: 18px;
+}
+
+/* Tugmalar */
+.farm-settings-grid .farm-outline-button,
+.farm-settings-grid .farm-primary-button {
+  min-height: 48px;
+  min-width: 190px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 11px;
+}
+
+/* Til tanlash */
+.farm-settings-grid .farm-language-settings select {
+  min-height: 48px;
+  font-size: 15px;
+}
+
+/* Bildirishnoma qatorlari */
+.farm-settings-grid .farm-notification-option {
+  padding: 13px 0;
+}
+
+/* Qorong‘i rejim tanlovi */
+.farm-settings-grid .farm-theme-settings label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Kartochka sarlavha va izohlari */
+.farm-settings-grid h3 {
+  font-size: 20px;
+}
+
+.farm-settings-grid > div > p {
+  min-height: auto;
+  font-size: 15px;
+}
+/* Sozlamalar tugmalarini markazga joylashtirish */
+.farm-settings-grid .farm-password-section > .farm-outline-button {
+  align-self: center !important;
+  margin: 12px auto 0 !important;
+  min-width: 220px;
+  width: 220px;
+  min-height: 50px;
+}
+
+/* Qorong‘i rejim tanlovini markazga joylashtirish */
+.farm-settings-grid .farm-theme-settings > label {
+  align-self: center;
+  justify-content: center;
+  margin: 12px auto 0 !important;
+  width: 220px;
+}
+
+/* Kartochka ichidagi elementlarni markazlash */
+.farm-settings-grid > div {
+  align-items: center;
+  text-align: center;
+}
+
+.farm-settings-grid > div > p {
+  text-align: center;
+}
+
+.farm-settings-grid .farm-notification-option {
+  text-align: left;
+}
+.farm-weather-content {
+  margin: 22px 0;
+}
+
+.farm-weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 16px;
+  background: #f0f7f2;
+  color: #245b3c;
+}
+
+.farm-weather-main strong {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.farm-weather-main p {
+  margin: 5px 0 0;
+  color: #64766a;
+  font-size: 14px;
+}
+
+.farm-weather-details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.farm-weather-details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #e7eee9;
+  border-radius: 14px;
+}
+
+.farm-weather-details span {
+  color: #78877e;
+  font-size: 12px;
+}
+
+.farm-weather-details strong {
+  color: #263d30;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .farm-weather-details {
+    grid-template-columns: 1fr;
+  }
+}
+.farm-weather-forecast {
+  margin-top: 24px;
+}
+
+.farm-weather-forecast h4 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  color: #263d30;
+}
+
+.farm-forecast-list {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.farm-forecast-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 6px;
+  border: 1px solid #e7eee9;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.farm-forecast-item span {
+  color: #78877e;
+  font-size: 12px;
+}
+
+.farm-forecast-item strong {
+  color: #263d30;
+  font-size: 14px;
+}
+
+.farm-forecast-item small {
+  color: #78877e;
+  font-size: 11px;
+}
+
+.farm-weather-location {
+  color: #78877e;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .farm-forecast-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.farm-search-results {
+  position: absolute;
+  top: 75px;
+  right: 90px;
+  z-index: 1000;
+  width: 340px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e7eee9;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(25, 55, 35, 0.12);
+}
+
+.farm-search-results-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #263d30;
+  font-size: 14px;
+}
+
+.farm-search-results-heading span {
+  color: #849188;
+  font-size: 12px;
+}
+
+.farm-search-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 8px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #34483b;
+  text-align: left;
+  cursor: pointer;
+}
+
+.farm-search-result:hover {
+  background: #f0f7f2;
+}
+
+.farm-search-result span {
+  flex: 1;
+  font-size: 13px;
+}
+
+.farm-search-result small {
+  color: #7b8b80;
+  font-size: 11px;
+}
+
+.farm-search-results > p {
+  color: #849188;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .farm-search-results {
+    left: 12px;
+    right: 12px;
+    top: 70px;
+    width: auto;
+  }
+}
+/* Dark theme — Weather forecast */
+.farm-dark-theme .farm-forecast-item {
+  background: #26364b;
+  border-color: #3a4a60;
+}
+
+.farm-dark-theme .farm-forecast-item span,
+.farm-dark-theme .farm-forecast-item small,
+.farm-dark-theme .farm-weather-location {
+  color: #cbd5e1;
+}
+
+.farm-dark-theme .farm-forecast-item strong {
+  color: #f1f5f9;
+}
+/* Dark theme — Main weather temperature */
+.farm-dark-theme .farm-weather-main {
+  background: #263f36;
+  color: #f1f5f9;
+  border: 1px solid #3b5b4b;
+}
+
+.farm-dark-theme .farm-weather-main strong {
+  color: #ffffff;
+}
+
+.farm-dark-theme .farm-weather-main p {
+  color: #cbd5e1;
+}
+
+/* Dark theme — Weather details */
+.farm-dark-theme .farm-weather-details > div {
+  background: #26364b;
+  border-color: #3a4a60;
+}
+
+.farm-dark-theme .farm-weather-details span {
+  color: #cbd5e1;
+}
+
+.farm-dark-theme .farm-weather-details strong {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-weather-forecast h4 {
+  color: #f1f5f9;
+}
+/* Dark theme — Crop icons */
+.farm-dark-theme .farm-crop-symbol.green {
+  background: #244a3b;
+  color: #8ee0a9;
+}
+
+.farm-dark-theme .farm-crop-symbol.gold {
+  background: #51432b;
+  color: #f0ce7b;
+}
+/* Dark theme — Status labels */
+.farm-dark-theme .farm-status-pill.status-completed {
+  background: #244a3b;
+  color: #8ee0a9;
+  border: 1px solid #3b6b50;
+}
+
+.farm-dark-theme .farm-status-pill.status-progress {
+  background: #51432b;
+  color: #f0ce7b;
+  border: 1px solid #76613a;
+}
+
+.farm-dark-theme .farm-status-pill.status-planned {
+  background: #294333;
+  color: #a7e0b8;
+  border: 1px solid #3d684d;
+}
+/* Dark theme — Ready to harvest */
+.farm-dark-theme .farm-status-pill.status-ready {
+  background: #234b59;
+  color: #8edcf0;
+  border: 1px solid #367184;
+}
+/* DARK THEME — CALENDAR */
+
+.farm-dark-theme .farm-calendar {
+  color: #e2e8f0;
+}
+
+/* Hafta kunlari */
+.farm-dark-theme .farm-calendar-weekday {
+  color: #a8b6c9;
+}
+
+/* Kun kataklari */
+.farm-dark-theme .farm-calendar-day {
+  background: #26364b;
+  border-color: #3a4a60;
+  color: #e2e8f0;
+}
+
+.farm-dark-theme .farm-calendar-day:hover {
+  background: #30465b;
+  border-color: #5b9b78;
+}
+
+/* Tanlangan kun */
+.farm-dark-theme .farm-calendar-day.selected {
+  background: #244a3b;
+  border: 2px solid #4ade80;
+  color: #ffffff;
+}
+
+/* Bugungi kun */
+.farm-dark-theme .farm-calendar-day.today {
+  background: #294333;
+  border-color: #4ade80;
+}
+
+.farm-dark-theme .farm-calendar-day.today > span {
+  color: #86efac;
+}
+
+/* Bugungi va tanlangan kun */
+.farm-dark-theme .farm-calendar-day.today.selected {
+  background: #315b43;
+  border-color: #86efac;
+}
+
+/* Kalendar navigatsiya tugmalari */
+.farm-dark-theme .farm-calendar-navigation button {
+  background: #26364b;
+  color: #e2e8f0;
+  border-color: #3a4a60;
+}
+
+.farm-dark-theme .farm-calendar-navigation button:hover {
+  background: #30465b;
+  color: #86efac;
+  border-color: #4ade80;
+}
+
+.farm-dark-theme .farm-calendar-navigation strong {
+  color: #f1f5f9;
+}
+
+/* Sug‘orish va o‘g‘itlash belgilari */
+.farm-dark-theme .calendar-irrigation-dot {
+  color: #7db7ff;
+}
+
+.farm-dark-theme .calendar-fertilizer-dot {
+  color: #86efac;
+}
+
+/* Tanlangan kun tafsilotlari */
+.farm-dark-theme .farm-calendar-selected {
+  border-top-color: #3a4a60;
+}
+
+.farm-dark-theme .farm-calendar-selected h4 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-calendar-selected > p {
+  color: #a8b6c9;
+}
+
+/* Kalendar tadbirlari */
+.farm-dark-theme .farm-calendar-event {
+  background: #26364b;
+  border-color: #3a4a60;
+}
+
+.farm-dark-theme .farm-calendar-event strong {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-calendar-event span {
+  color: #cbd5e1;
+}
+/* DARK THEME — NOTIFICATIONS */
+
+/* Statistik kartalar */
+.farm-dark-theme .farm-notification-stat {
+  background: #26364b;
+  border: 1px solid #3a4a60;
+  color: #e2e8f0;
+}
+
+.farm-dark-theme .farm-notification-stat span {
+  color: #a8b6c9;
+}
+
+.farm-dark-theme .farm-notification-stat strong {
+  color: #ffffff;
+}
+
+/* Bildirishnomalar sarlavhasi */
+.farm-dark-theme .farm-notifications-header h2 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-notifications-header p {
+  color: #a8b6c9;
+}
+
+/* Yangi xabarlar soni */
+.farm-dark-theme .farm-notification-count {
+  background: #294333;
+  color: #86efac;
+  border: 1px solid #3d684d;
+}
+
+/* Bildirishnoma kartalari */
+.farm-dark-theme .farm-notification-item {
+  background: #26364b;
+  border: 1px solid #3a4a60;
+  color: #e2e8f0;
+}
+
+/* O‘qilmagan xabar */
+.farm-dark-theme .farm-notification-item.is-unread {
+  background: #293e50;
+  border-color: #41617a;
+}
+
+/* O‘qilgan xabar */
+.farm-dark-theme .farm-notification-item.is-read {
+  background: #202f42;
+  border-color: #34445a;
+}
+
+/* Xabar belgisi */
+.farm-dark-theme .farm-notification-icon {
+  background: #294333;
+  color: #86efac;
+}
+
+/* Xabar matnlari */
+.farm-dark-theme .farm-notification-content strong {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-notification-content p {
+  color: #cbd5e1;
+}
+
+.farm-dark-theme .farm-notification-content span {
+  color: #94a3b8;
+}
+
+/* Bo‘sh bildirishnomalar holati */
+.farm-dark-theme .farm-empty-state {
+  color: #cbd5e1;
+}
+
+.farm-dark-theme .farm-empty-state h3 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-empty-state p {
+  color: #a8b6c9;
+}
+/* Dark theme — Empty notifications */
+.farm-dark-theme .farm-notifications-list:empty {
+  display: none;
+}
+
+.farm-dark-theme .farm-empty-state {
+  background: #26364b;
+  border: 1px solid #3a4a60;
+  border-radius: 16px;
+  padding: 35px 20px;
+  color: #cbd5e1;
+}
+
+.farm-dark-theme .farm-empty-state svg {
+  color: #86c99b;
+}
+
+.farm-dark-theme .farm-empty-state h3 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-empty-state p {
+  color: #a8b6c9;
+}
+/* DARK THEME — PROFILE */
+
+/* Profil sarlavhasi */
+.farm-dark-theme .farm-profile-heading h2 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-profile-heading p {
+  color: #a8b6c9;
+}
+
+/* Profil ma'lumotlari kartochkalari */
+.farm-dark-theme .farm-profile-info p {
+  background: #26364b;
+  border-color: #3a4a60;
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-profile-info strong {
+  color: #a8b6c9;
+}
+
+/* Profil rasmi */
+.farm-dark-theme .farm-profile-avatar {
+  background: #294333;
+  color: #86efac;
+}
+
+/* Rasmni almashtirish tugmasi */
+.farm-dark-theme .farm-profile-avatar-wrapper > span {
+  background: #294333;
+  color: #86efac;
+}
+
+.farm-dark-theme .farm-profile-avatar-wrapper:hover > span {
+  background: #345740;
+}
+
+/* Parol xavfsizligi kartochkasi */
+.farm-dark-theme .farm-password-section {
+  background: #26364b;
+  border-color: #3a4a60;
+}
+
+.farm-dark-theme .farm-password-section h3 {
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-password-section > p {
+  color: #b8c5d6;
+}
+
+/* Profil formasi */
+.farm-dark-theme .farm-profile-form label,
+.farm-dark-theme .farm-password-form label {
+  color: #e2e8f0;
+}
+
+.farm-dark-theme .farm-profile-form input,
+.farm-dark-theme .farm-password-form input {
+  background: #1f2937;
+  border-color: #46566c;
+  color: #f1f5f9;
+}
+
+.farm-dark-theme .farm-profile-form input:disabled {
+  background: #26364b;
+  color: #94a3b8;
+}
+
+/* Profil rasmi va tugmalar orasidagi chiziq */
+.farm-dark-theme .farm-profile-logout {
+  border-top-color: #3a4a60;
+}
+
+/* Profil xabarlari */
+.farm-dark-theme .farm-profile-notice {
+  color: #86efac;
+}
+/* DARK THEME — TOPBAR ICONS */
+
+/* Qo‘ng‘iroqcha tugmasi */
+.farm-dark-theme .farm-notification-button {
+  background: #26364b;
+  color: #e2e8f0;
+  border-color: #3a4a60;
+}
+
+.farm-dark-theme .farm-notification-button:hover {
+  background: #294333;
+  color: #86efac;
+  border-color: #4ade80;
+}
+
+/* Profil belgisi */
+.farm-dark-theme .farm-user-avatar {
+  background: #86efac;
+  color: #14532d;
+  border: 1px solid #4ade80;
+  font-weight: 700;
+}
+.farm-dark-theme .farm-top-avatar {
+  background: #86efac !important;
+  color: #14532d !important;
+  -webkit-text-fill-color: #14532d !important;
+  border: 1px solid #4ade80;
+  font-weight: 700;
+  opacity: 1;
+}
+/* Dashboard kartochkalari yozuvlari */
+.farm-stat-card h3 {
+  font-size: 16px;
+}
+
+.farm-stat-card strong {
+  font-size: 27px;
+}
+
+.farm-stat-card p {
+  font-size: 13px;
+}
